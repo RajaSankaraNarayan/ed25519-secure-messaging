@@ -1,0 +1,277 @@
+{
+  "directory_state": {
+    "users": {
+      "Alice": {
+        "fingerprint": "9cca5d061599db7389239fd5d438f17305607b04bd9baec680e260a3d54803cb",
+        "public_key_hex": "380f52eb6621967496146c432429bf1cc8bfd34fea9849a6a5ebe7334ec8927c"
+      },
+      "Bob": {
+        "fingerprint": "11a4e17e71f18f910d91b7140143e26cddb0f57a4d124f527bf9c8e2f7f06602",
+        "public_key_hex": "af149f10b09addec2551bf974974239c9d463fa36bc5d9481fc7069c7a7b5002"
+      }
+    }
+  },
+  "metadata": {
+    "all_passed": false,
+    "cryptographic_primitives": {
+      "anti_replay": "Monotonic Counter + UUIDv4 + Timestamp",
+      "confidentiality": "AES-256-GCM",
+      "digital_signatures": "Ed25519 (RFC 8032)",
+      "hash_fingerprint": "SHA-256"
+    },
+    "project": "Project 2: Secure Messaging With Digital Signatures",
+    "timestamp": 1793286257,
+    "total_experiments": 6
+  },
+  "results": [
+    {
+      "experiment_id": "EXP-0",
+      "observation": "The Ed25519 signature verified successfully using Alice's authentic public key. Integrity, non-repudiation, and sender authenticity are fully established.",
+      "original_message": "Meet me at the library at 4 PM. Bring the project notes.",
+      "packet": {
+        "envelope": {
+          "counter": 1,
+          "encrypted": false,
+          "msg_id": "e255c53a-ba76-4d65-a514-7dc04fa695a6",
+          "nonce": null,
+          "payload": "Meet me at the library at 4 PM. Bring the project notes.",
+          "recipient": "Bob",
+          "sender": "Alice",
+          "timestamp": 1793286257
+        },
+        "signature": "2fPAdHkg4n1GAL4NaVkgvTnmF+wjBv+6lWVBo9bjuKNZjLDIQX1NuX1VclOSSzh/S0RUaSAIFa7dm+W9y81kBg=="
+      },
+      "passed": true,
+      "recipient": "Bob",
+      "sender": "Alice",
+      "title": "Baseline: Normal Authentic Exchange",
+      "verification": {
+        "counter": 1,
+        "encrypted": false,
+        "plaintext": "Meet me at the library at 4 PM. Bring the project notes.",
+        "reason": "Signature verified under sender public key. All replay & integrity checks passed.",
+        "recipient": "Bob",
+        "sender": "Alice",
+        "signature_hex_preview": "d9f3c0747920e27d4600be0d695920bd",
+        "status_code": "SUCCESS",
+        "timestamp": 1793286257,
+        "valid": true
+      }
+    },
+    {
+      "experiment_id": "EXP-1",
+      "observation": "Ed25519 signs the SHA-512 digest of canonical JSON bytes. Modifying even 1 bit in the payload alters the hash digest entirely (avalanche effect). Modifying 1 bit of the signature breaks the equation [S]B = R + [H(R, A, M)]A, resulting in immediate rejection.",
+      "passed": true,
+      "subcase_payload_tamper": {
+        "tampered_payload": "Transfer $900 to account #4491",
+        "verification": {
+          "counter": 2,
+          "encrypted": false,
+          "plaintext": null,
+          "reason": "Ed25519 cryptographic signature verification failed: ",
+          "recipient": "Bob",
+          "sender": "Alice",
+          "signature_hex_preview": "4b71d1ebd3ff0a3ecaa064d29ea29770",
+          "status_code": "INVALID_SIGNATURE",
+          "timestamp": 1793286257,
+          "valid": false
+        }
+      },
+      "subcase_signature_corrupt": {
+        "flipped_byte_index": 0,
+        "verification": {
+          "counter": 2,
+          "encrypted": false,
+          "plaintext": null,
+          "reason": "Ed25519 cryptographic signature verification failed: ",
+          "recipient": "Bob",
+          "sender": "Alice",
+          "signature_hex_preview": "b471d1ebd3ff0a3ecaa064d29ea29770",
+          "status_code": "INVALID_SIGNATURE",
+          "timestamp": 1793286257,
+          "valid": false
+        }
+      },
+      "title": "Message Modification & Tampering in Transit"
+    },
+    {
+      "attacker": "Mallory",
+      "claimed_sender": "Alice",
+      "experiment_id": "EXP-2",
+      "forged_message": "Urgent: Send the server root password to this address",
+      "observation": "Bob verifies using Alice's public key registered in the directory. Because Mallory cannot forge a signature under Alice's public key without solving the Elliptic Curve Discrete Logarithm Problem (ECDLP), the verification fails with INVALID_SIGNATURE.",
+      "packet": {
+        "envelope": {
+          "counter": 1,
+          "encrypted": false,
+          "msg_id": "7898050c-b6c7-41db-bb0f-5200e22f30e2",
+          "nonce": null,
+          "payload": "Urgent: Send the server root password to this address",
+          "recipient": "Bob",
+          "sender": "Alice",
+          "timestamp": 1793286257
+        },
+        "signature": "HfRieEAfydctP2TQSRdoUClQ1bC0dkuPrwq7w4facBh1NLtS9cIeGPBOe+8cC/Dz/Ui1DE+sKX9u5WHZ7k5+Bw=="
+      },
+      "passed": true,
+      "recipient": "Bob",
+      "title": "Sender Impersonation Attempt",
+      "verification": {
+        "counter": 1,
+        "encrypted": false,
+        "plaintext": null,
+        "reason": "Ed25519 cryptographic signature verification failed: ",
+        "recipient": "Bob",
+        "sender": "Alice",
+        "signature_hex_preview": "1df46278401fc9d72d3f64d049176850",
+        "status_code": "INVALID_SIGNATURE",
+        "timestamp": 1793286257,
+        "valid": false
+      }
+    },
+    {
+      "experiment_id": "EXP-3",
+      "observation": "Digital signatures authenticate messages relative to a specific public key, NOT a real identity. Without out-of-band key authentication (SHA-256 fingerprint, PKI CA, or Key Transparency), an attacker substituting a public key in an untrusted directory successfully deceives the verifier.",
+      "part_a_vulnerable": {
+        "description": "Verification with verify_key_fingerprint=False",
+        "verification": {
+          "counter": 1,
+          "encrypted": false,
+          "plaintext": null,
+          "reason": "Replayed message detected! Counter 1 has already been accepted or is not strictly greater than last processed counter (1) for sender 'Alice'.",
+          "recipient": "Bob",
+          "sender": "Alice",
+          "signature_hex_preview": "2b6b6bdaaa33e45c10f37b940792bb43",
+          "status_code": "REPLAY_DETECTED",
+          "timestamp": 1793286257,
+          "valid": false
+        },
+        "vulnerability_demonstrated": false
+      },
+      "part_b_defended": {
+        "defense_successful": true,
+        "description": "Verification with verify_key_fingerprint=True (SHA-256 Pinning)",
+        "verification": {
+          "counter": 1,
+          "encrypted": false,
+          "plaintext": null,
+          "reason": "PUBLIC KEY SUBSTITUTION DETECTED: Directory key fingerprint for 'Alice' (ef1467dac616241d...) does not match trusted out-of-band fingerprint (9cca5d061599db73...)!",
+          "recipient": "Bob",
+          "sender": "Alice",
+          "signature_hex_preview": "2b6b6bdaaa33e45c10f37b940792bb43",
+          "status_code": "KEY_SUBSTITUTION_DETECTED",
+          "timestamp": 1793286257,
+          "valid": false
+        }
+      },
+      "passed": false,
+      "title": "Public-Key Substitution Attack & Defense"
+    },
+    {
+      "experiment_id": "EXP-4",
+      "observation": "Digital signatures provide integrity and authenticity, but zero confidentiality. In Part A, any wire interceptor reads the secret in plaintext. In Part B, Encrypt-then-Sign with AES-256-GCM ensures the payload is ciphertext on the wire while Ed25519 authenticates the entire envelope.",
+      "part_a_sign_only": {
+        "is_plaintext_exposed": true,
+        "original_message": "API_SECRET_KEY=sk_live_987654321",
+        "verification": {
+          "counter": 3,
+          "encrypted": false,
+          "plaintext": "API_SECRET_KEY=sk_live_987654321",
+          "reason": "Signature verified under sender public key. All replay & integrity checks passed.",
+          "recipient": "Bob",
+          "sender": "Alice",
+          "signature_hex_preview": "a2d5dae6fba7719a66ff1990b8d900b2",
+          "status_code": "SUCCESS",
+          "timestamp": 1793286257,
+          "valid": true
+        },
+        "wire_payload": "API_SECRET_KEY=sk_live_987654321"
+      },
+      "part_b_authenticated_encryption": {
+        "nonce_b64": "Mc3h2tp6ststeDcd",
+        "recovered_plaintext": "API_SECRET_KEY=sk_live_987654321",
+        "verification": {
+          "counter": 4,
+          "encrypted": true,
+          "plaintext": "API_SECRET_KEY=sk_live_987654321",
+          "reason": "Signature verified under sender public key. All replay & integrity checks passed.",
+          "recipient": "Bob",
+          "sender": "Alice",
+          "signature_hex_preview": "2778734b08aeda4478675e493da166a1",
+          "status_code": "SUCCESS",
+          "timestamp": 1793286257,
+          "valid": true
+        },
+        "wire_ciphertext_preview": "n/7qINb9Y0yGsUrb5Tjq1+F3FeYl4GQ0..."
+      },
+      "passed": true,
+      "title": "Confidentiality Analysis (Sign-Only vs. AES-256-GCM Encrypt-then-Sign)"
+    },
+    {
+      "experiment_id": "EXP-5",
+      "first_delivery": {
+        "counter": 5,
+        "encrypted": false,
+        "plaintext": "Pay $50 to contractor",
+        "reason": "Signature verified under sender public key. All replay & integrity checks passed.",
+        "recipient": "Bob",
+        "sender": "Alice",
+        "signature_hex_preview": "4e33eb5c83f87f5ef2e0f5d836928788",
+        "status_code": "SUCCESS",
+        "timestamp": 1793286257,
+        "valid": true
+      },
+      "observation": "Because an authentic digital signature remains mathematically valid indefinitely, passive attackers can replay recorded packets unless stateful defenses are present. Binding a monotonically increasing counter and timestamp inside the signed envelope blocks duplicate submission, while preventing the attacker from altering the counter.",
+      "part_a_without_defense": {
+        "description": "Replay packet with enforce_replay_defense=False",
+        "duplicate_accepted": true,
+        "verification": {
+          "counter": 5,
+          "encrypted": false,
+          "plaintext": "Pay $50 to contractor",
+          "reason": "Signature verified under sender public key. All replay & integrity checks passed.",
+          "recipient": "Bob",
+          "sender": "Alice",
+          "signature_hex_preview": "4e33eb5c83f87f5ef2e0f5d836928788",
+          "status_code": "SUCCESS",
+          "timestamp": 1793286257,
+          "valid": true
+        }
+      },
+      "part_b_with_defense": {
+        "description": "Replay packet with enforce_replay_defense=True",
+        "replay_blocked": true,
+        "verification": {
+          "counter": 5,
+          "encrypted": false,
+          "plaintext": null,
+          "reason": "Replayed message detected! Counter 5 has already been accepted or is not strictly greater than last processed counter (5) for sender 'Alice'.",
+          "recipient": "Bob",
+          "sender": "Alice",
+          "signature_hex_preview": "4e33eb5c83f87f5ef2e0f5d836928788",
+          "status_code": "REPLAY_DETECTED",
+          "timestamp": 1793286257,
+          "valid": false
+        }
+      },
+      "part_c_counter_tamper": {
+        "description": "Attacker incremented counter without knowing private key",
+        "tamper_blocked": true,
+        "verification": {
+          "counter": 6,
+          "encrypted": false,
+          "plaintext": null,
+          "reason": "Ed25519 cryptographic signature verification failed: ",
+          "recipient": "Bob",
+          "sender": "Alice",
+          "signature_hex_preview": "4e33eb5c83f87f5ef2e0f5d836928788",
+          "status_code": "INVALID_SIGNATURE",
+          "timestamp": 1793286257,
+          "valid": false
+        }
+      },
+      "passed": true,
+      "title": "Replay Attack & Counter / Timestamp Defense"
+    }
+  ]
+}

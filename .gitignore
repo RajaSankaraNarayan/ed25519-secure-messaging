@@ -179,3 +179,46 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Cryptography & Security - Block private keys & sensitive credentials
+*.key
+*private*.pem
+private_key*
+*.p12
+*.pfx
+secrets/
+.env
+
+# Allow tracked public keys in artifacts
+!artifacts/*.pub
+!artifacts/*public*.pem
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editor & Backup Artifacts
+*~
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Microsoft Office / PowerPoint Temporary Lock Files
+~$*.pptx
+~$*.docx
+~$*.xlsx
+.~lock.*
+
