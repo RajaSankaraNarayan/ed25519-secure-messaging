@@ -2,17 +2,17 @@
   "directory_state": {
     "users": {
       "Alice": {
-        "fingerprint": "9cca5d061599db7389239fd5d438f17305607b04bd9baec680e260a3d54803cb",
-        "public_key_hex": "380f52eb6621967496146c432429bf1cc8bfd34fea9849a6a5ebe7334ec8927c"
+        "fingerprint": "19e5bdfe935a4c9f44cfe0dc4297a401f18420d788ed626e0d31a8e8a92e1fc1",
+        "public_key_hex": "a222d01942697be538adbb03af5183b721fe3a9672b80f092f37d995059522b1"
       },
       "Bob": {
-        "fingerprint": "11a4e17e71f18f910d91b7140143e26cddb0f57a4d124f527bf9c8e2f7f06602",
-        "public_key_hex": "af149f10b09addec2551bf974974239c9d463fa36bc5d9481fc7069c7a7b5002"
+        "fingerprint": "ad50052900a00eb06bd61691e887bff708b050afb7a2b03558595f4d93662318",
+        "public_key_hex": "34633201c4261c5e69853d009a4d929eded71e87ce30ddb98fd73914efdf6a8d"
       }
     }
   },
   "metadata": {
-    "all_passed": false,
+    "all_passed": true,
     "cryptographic_primitives": {
       "anti_replay": "Monotonic Counter + UUIDv4 + Timestamp",
       "confidentiality": "AES-256-GCM",
@@ -20,7 +20,7 @@
       "hash_fingerprint": "SHA-256"
     },
     "project": "Project 2: Secure Messaging With Digital Signatures",
-    "timestamp": 1793286257,
+    "timestamp": 1793422380,
     "total_experiments": 6
   },
   "results": [
@@ -32,14 +32,14 @@
         "envelope": {
           "counter": 1,
           "encrypted": false,
-          "msg_id": "e255c53a-ba76-4d65-a514-7dc04fa695a6",
+          "msg_id": "58bc0f78-593a-4bd6-b22e-9994d155d605",
           "nonce": null,
           "payload": "Meet me at the library at 4 PM. Bring the project notes.",
           "recipient": "Bob",
           "sender": "Alice",
-          "timestamp": 1793286257
+          "timestamp": 1793422380
         },
-        "signature": "2fPAdHkg4n1GAL4NaVkgvTnmF+wjBv+6lWVBo9bjuKNZjLDIQX1NuX1VclOSSzh/S0RUaSAIFa7dm+W9y81kBg=="
+        "signature": "hzW7nYuDFrzY2kQUvWee8N++sY2107hLg9qerOb676sKtnaaKo2knUu9LCG9/hoc254HdoK1Hd699UVudNzwAA=="
       },
       "passed": true,
       "recipient": "Bob",
@@ -52,9 +52,9 @@
         "reason": "Signature verified under sender public key. All replay & integrity checks passed.",
         "recipient": "Bob",
         "sender": "Alice",
-        "signature_hex_preview": "d9f3c0747920e27d4600be0d695920bd",
+        "signature_hex_preview": "8735bb9d8b8316bcd8da4414bd679ef0",
         "status_code": "SUCCESS",
-        "timestamp": 1793286257,
+        "timestamp": 1793422380,
         "valid": true
       }
     },
@@ -71,9 +71,9 @@
           "reason": "Ed25519 cryptographic signature verification failed: ",
           "recipient": "Bob",
           "sender": "Alice",
-          "signature_hex_preview": "4b71d1ebd3ff0a3ecaa064d29ea29770",
+          "signature_hex_preview": "d6f940adde797c818654455de75367dd",
           "status_code": "INVALID_SIGNATURE",
-          "timestamp": 1793286257,
+          "timestamp": 1793422380,
           "valid": false
         }
       },
@@ -86,9 +86,9 @@
           "reason": "Ed25519 cryptographic signature verification failed: ",
           "recipient": "Bob",
           "sender": "Alice",
-          "signature_hex_preview": "b471d1ebd3ff0a3ecaa064d29ea29770",
+          "signature_hex_preview": "29f940adde797c818654455de75367dd",
           "status_code": "INVALID_SIGNATURE",
-          "timestamp": 1793286257,
+          "timestamp": 1793422380,
           "valid": false
         }
       },
@@ -104,14 +104,14 @@
         "envelope": {
           "counter": 1,
           "encrypted": false,
-          "msg_id": "7898050c-b6c7-41db-bb0f-5200e22f30e2",
+          "msg_id": "dbf189e9-3695-41fa-8753-a53b478a5d66",
           "nonce": null,
           "payload": "Urgent: Send the server root password to this address",
           "recipient": "Bob",
           "sender": "Alice",
-          "timestamp": 1793286257
+          "timestamp": 1793422380
         },
-        "signature": "HfRieEAfydctP2TQSRdoUClQ1bC0dkuPrwq7w4facBh1NLtS9cIeGPBOe+8cC/Dz/Ui1DE+sKX9u5WHZ7k5+Bw=="
+        "signature": "O4UZTt239yh3I4PUVASdkcJzICbLtqSwr2wuMCSYdGDpyYm+p6Oe9CN853ZbVRkVEpqn/2YhcAmNeEajSYo6DQ=="
       },
       "passed": true,
       "recipient": "Bob",
@@ -123,9 +123,9 @@
         "reason": "Ed25519 cryptographic signature verification failed: ",
         "recipient": "Bob",
         "sender": "Alice",
-        "signature_hex_preview": "1df46278401fc9d72d3f64d049176850",
+        "signature_hex_preview": "3b85194eddb7f728772383d454049d91",
         "status_code": "INVALID_SIGNATURE",
-        "timestamp": 1793286257,
+        "timestamp": 1793422380,
         "valid": false
       }
     },
@@ -135,36 +135,36 @@
       "part_a_vulnerable": {
         "description": "Verification with verify_key_fingerprint=False",
         "verification": {
-          "counter": 1,
+          "counter": 3,
           "encrypted": false,
-          "plaintext": null,
-          "reason": "Replayed message detected! Counter 1 has already been accepted or is not strictly greater than last processed counter (1) for sender 'Alice'.",
+          "plaintext": "Approve wire transfer to offshore account",
+          "reason": "Signature verified under sender public key. All replay & integrity checks passed.",
           "recipient": "Bob",
           "sender": "Alice",
-          "signature_hex_preview": "2b6b6bdaaa33e45c10f37b940792bb43",
-          "status_code": "REPLAY_DETECTED",
-          "timestamp": 1793286257,
-          "valid": false
+          "signature_hex_preview": "c3e6fb6bd0868225cbed7f65967ea32c",
+          "status_code": "SUCCESS",
+          "timestamp": 1793422380,
+          "valid": true
         },
-        "vulnerability_demonstrated": false
+        "vulnerability_demonstrated": true
       },
       "part_b_defended": {
         "defense_successful": true,
         "description": "Verification with verify_key_fingerprint=True (SHA-256 Pinning)",
         "verification": {
-          "counter": 1,
+          "counter": 3,
           "encrypted": false,
           "plaintext": null,
-          "reason": "PUBLIC KEY SUBSTITUTION DETECTED: Directory key fingerprint for 'Alice' (ef1467dac616241d...) does not match trusted out-of-band fingerprint (9cca5d061599db73...)!",
+          "reason": "PUBLIC KEY SUBSTITUTION DETECTED: Directory key fingerprint for 'Alice' (838b136b28540034...) does not match trusted out-of-band fingerprint (19e5bdfe935a4c9f...)!",
           "recipient": "Bob",
           "sender": "Alice",
-          "signature_hex_preview": "2b6b6bdaaa33e45c10f37b940792bb43",
+          "signature_hex_preview": "c3e6fb6bd0868225cbed7f65967ea32c",
           "status_code": "KEY_SUBSTITUTION_DETECTED",
-          "timestamp": 1793286257,
+          "timestamp": 1793422380,
           "valid": false
         }
       },
-      "passed": false,
+      "passed": true,
       "title": "Public-Key Substitution Attack & Defense"
     },
     {
@@ -180,15 +180,15 @@
           "reason": "Signature verified under sender public key. All replay & integrity checks passed.",
           "recipient": "Bob",
           "sender": "Alice",
-          "signature_hex_preview": "a2d5dae6fba7719a66ff1990b8d900b2",
+          "signature_hex_preview": "d27c522d19b4923020e8914aa9902b33",
           "status_code": "SUCCESS",
-          "timestamp": 1793286257,
+          "timestamp": 1793422380,
           "valid": true
         },
         "wire_payload": "API_SECRET_KEY=sk_live_987654321"
       },
       "part_b_authenticated_encryption": {
-        "nonce_b64": "Mc3h2tp6ststeDcd",
+        "nonce_b64": "VlTJVblq/azxBSjk",
         "recovered_plaintext": "API_SECRET_KEY=sk_live_987654321",
         "verification": {
           "counter": 4,
@@ -197,12 +197,12 @@
           "reason": "Signature verified under sender public key. All replay & integrity checks passed.",
           "recipient": "Bob",
           "sender": "Alice",
-          "signature_hex_preview": "2778734b08aeda4478675e493da166a1",
+          "signature_hex_preview": "c4f7a74c55fca4af84e02f20e6134db3",
           "status_code": "SUCCESS",
-          "timestamp": 1793286257,
+          "timestamp": 1793422380,
           "valid": true
         },
-        "wire_ciphertext_preview": "n/7qINb9Y0yGsUrb5Tjq1+F3FeYl4GQ0..."
+        "wire_ciphertext_preview": "eQDkxWFm9f6cyw1PPCKs9mAWGDc4deU6..."
       },
       "passed": true,
       "title": "Confidentiality Analysis (Sign-Only vs. AES-256-GCM Encrypt-then-Sign)"
@@ -216,9 +216,9 @@
         "reason": "Signature verified under sender public key. All replay & integrity checks passed.",
         "recipient": "Bob",
         "sender": "Alice",
-        "signature_hex_preview": "4e33eb5c83f87f5ef2e0f5d836928788",
+        "signature_hex_preview": "4a28c8e4c3816d7a08e8cf89a310ded1",
         "status_code": "SUCCESS",
-        "timestamp": 1793286257,
+        "timestamp": 1793422380,
         "valid": true
       },
       "observation": "Because an authentic digital signature remains mathematically valid indefinitely, passive attackers can replay recorded packets unless stateful defenses are present. Binding a monotonically increasing counter and timestamp inside the signed envelope blocks duplicate submission, while preventing the attacker from altering the counter.",
@@ -232,9 +232,9 @@
           "reason": "Signature verified under sender public key. All replay & integrity checks passed.",
           "recipient": "Bob",
           "sender": "Alice",
-          "signature_hex_preview": "4e33eb5c83f87f5ef2e0f5d836928788",
+          "signature_hex_preview": "4a28c8e4c3816d7a08e8cf89a310ded1",
           "status_code": "SUCCESS",
-          "timestamp": 1793286257,
+          "timestamp": 1793422380,
           "valid": true
         }
       },
@@ -248,9 +248,9 @@
           "reason": "Replayed message detected! Counter 5 has already been accepted or is not strictly greater than last processed counter (5) for sender 'Alice'.",
           "recipient": "Bob",
           "sender": "Alice",
-          "signature_hex_preview": "4e33eb5c83f87f5ef2e0f5d836928788",
+          "signature_hex_preview": "4a28c8e4c3816d7a08e8cf89a310ded1",
           "status_code": "REPLAY_DETECTED",
-          "timestamp": 1793286257,
+          "timestamp": 1793422380,
           "valid": false
         }
       },
@@ -264,9 +264,9 @@
           "reason": "Ed25519 cryptographic signature verification failed: ",
           "recipient": "Bob",
           "sender": "Alice",
-          "signature_hex_preview": "4e33eb5c83f87f5ef2e0f5d836928788",
+          "signature_hex_preview": "4a28c8e4c3816d7a08e8cf89a310ded1",
           "status_code": "INVALID_SIGNATURE",
-          "timestamp": 1793286257,
+          "timestamp": 1793422380,
           "valid": false
         }
       },

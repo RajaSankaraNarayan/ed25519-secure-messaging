@@ -156,8 +156,18 @@ def exp3_public_key_substitution(alice: User, bob: User, directory: PublicKeyDir
     # Mallory tampers with the directory: replaces Alice's key with Mallory's public key
     directory.tamper_registry_key("Alice", mallory.public_key)
 
-    # Mallory crafts message with sender='Alice', signed with Mallory's private key
-    forged_packet = mallory.sign_message(recipient="Bob", plaintext=forged_message)
+    # Save Bob's replay state before Part A so attack simulation does not pollute state
+    saved_seen = set(bob.seen_messages)
+    saved_last = dict(bob.last_counter_per_sender)
+
+    # Mallory crafts message with sender='Alice', signed with Mallory's private key.
+    # Mallory uses a monotonic sequence counter advancing Alice's sequence to simulate
+    # an active forged command.
+    forged_packet = mallory.sign_message(
+        recipient="Bob",
+        plaintext=forged_message,
+        custom_counter=alice.msg_counter + 1
+    )
     forged_packet["envelope"]["sender"] = "Alice"
     canonical_bytes = json.dumps(forged_packet["envelope"], sort_keys=True, separators=(',', ':')).encode('utf-8')
     forged_packet["signature"] = base64.b64encode(mallory.private_key.sign(canonical_bytes)).decode('utf-8')
@@ -168,8 +178,10 @@ def exp3_public_key_substitution(alice: User, bob: User, directory: PublicKeyDir
     # Part B: Defended Verification (Out-of-band SHA-256 fingerprint check)
     part_b_res = bob.verify_message(forged_packet, verify_key_fingerprint=True)
 
-    # Restore Alice's genuine public key in the directory
+    # Restore Alice's genuine public key in the directory and Bob's state
     directory.register_user("Alice", alice.public_key, update_trusted_fingerprint=True)
+    bob.seen_messages = saved_seen
+    bob.last_counter_per_sender = saved_last
 
     passed = (
         part_a_res["valid"] is True and part_a_res["status_code"] == "SUCCESS" and

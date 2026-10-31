@@ -1,13 +1,13 @@
 {
   "envelope": {
-    "counter": 2,
+    "counter": 7,
     "encrypted": true,
-    "msg_id": "bb283b2e-ad26-47b2-9138-7c8b2bd7f561",
-    "nonce": "2MzD4ioLWf57ZJ35",
-    "payload": "3wwEXNIiyk3Gat2F9jkmPt9a6MkZVucz5VHNbezfzPD7OqGfejjkteIITsgaxZJL",
+    "msg_id": "871fb58a-047c-4cbf-a894-c4d5c5f1c703",
+    "nonce": "LgTTe5/7J8cammmT",
+    "payload": "ljo9TUMLAREqtNuSNXJcLhof0/B9ahMfG8I32tgWDMJj567IANiR1Akmx+dX6bZy",
     "recipient": "Bob",
     "sender": "Alice",
-    "timestamp": 1793286258
+    "timestamp": 1793422380
   },
-  "signature": "hcLJSauuiqPfSpFvlBPncXtTbPWDBEBSgiIaT2R547c/aD1s6ae7ujvivmWDw0/KRYDc3BSKL1fp7YYEQx9sCQ=="
+  "signature": "16NYb5H5A2DO4zAG6YvXwdF8fH+lntgzfomSyEQKl0qoqZiT8eFkIz7oRzRP5qLUq9UFWznHt4N10dHZmcoOAQ=="
 }
